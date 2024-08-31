@@ -11,11 +11,11 @@ This README provides an overview of the EMU8086 emulator and details a basic ass
 When you click the “**EMULATE**” button in EMU8086, three windows appear:
 
 1. **Main Editor**: The primary interface where you write and edit assembly code.
-   ![Main Editor](image.png) <br><br>
+   ![Main Editor](./Assests/image.png) <br><br>
 2. **Source Code Window**: Displays the assembly code in a separate window for easy reference.
-   ![Source Code Window](<2Source Code Window.png>) <br><br>
+   ![Source Code Window](<./Assests/2Source Code Window.png>) <br><br>
 3. **Binary File Window**: Shows the binary equivalent of the assembly instructions.
-   ![Source Code Window](<3Binary File Window.png>) <br><br>
+   ![Source Code Window](<./Assests/3Binary File Window.png>) <br><br>
 
 ---
 
@@ -23,7 +23,7 @@ When you click the “**EMULATE**” button in EMU8086, three windows appear:
 
 The **Data Registers** include AX, BX, CX, and DX, which are used for general-purpose data manipulation in 8086 assembly programs.
 
-![Data Registers](<4Data Registers.png>) <br><br>
+![Data Registers](<./Assests/4Data Registers.png>) <br><br>
 
 ---
 
@@ -47,7 +47,7 @@ The **Data Registers** include AX, BX, CX, and DX, which are used for general-pu
   - Segment Base Address( which is the value of CS) multiplied by 10 plus offset(which is IP) ⇒
     CS \* 10 + Offset
 
-    ![CSIP](5CSIP.png) <br><br>
+    ![CSIP](./Assests/5CSIP.png) <br><br>
 
     Example:
     If `CS = 0100h` and `IP = 0000h`, the physical address is calculated as:
@@ -77,7 +77,7 @@ The **Data Registers** include AX, BX, CX, and DX, which are used for general-pu
     - So the first code(01000) indicates the Physical Address. Furthermore these are 3 different location that got highlighted because the taken assembly language is of 3 byte so every locations consumes one byte.
     - So **1234H** is converted into 3 bytes as **B8** **34** **12**
 
-    ![CSIP](6CSIP.png) <br><br>
+    ![CSIP](./Assests/6CSIP.png) <br><br>
 
 - **Logical Address:**
 
@@ -86,7 +86,7 @@ The **Data Registers** include AX, BX, CX, and DX, which are used for general-pu
   - So from the above example logical address will be:
     **`CS : IP  =  0100 : 0000`**
 
-    ![CSIP](7CSIP.png) <br><br>
+    ![CSIP](./Assests/7CSIP.png) <br><br>
 
 ---
 
@@ -100,7 +100,7 @@ The **Data Registers** include AX, BX, CX, and DX, which are used for general-pu
   - **Data Segment and**
   - **Heap/Extra Segment**
 
-  ![Stack Segment Register](image-1.png) <br><br>
+  ![Stack Segment Register](./Assests/image-1.png) <br><br>
 
 - For every segments we have **_Segment Base Address (SBA)_** and **_Offset_** part; And for Segment Base Address we use segment registers. As in code segment we were using Code Segment (CS)
 - The SS (2), DS (3), and ES (4) are actually showing the segment base address of their corresponding segments.
@@ -111,12 +111,12 @@ The **Data Registers** include AX, BX, CX, and DX, which are used for general-pu
   - Destination Index (DI)
 - And offset parts are shown in the below 4 parts:
 
-  ![Offsets](image-2.png) <br><br>
+  ![Offsets](./Assests/image-2.png) <br><br>
 
 - Stack Pointer (SP) and Base Pointer (BP) are the offset registers of the Stack Segment Register and
 - Source Index (SI) and Destination Index (DI) are the offset registers of the Data Segment Register.
 
-  ![overview](image-3.png) <br><br>
+  ![overview](./Assests/image-3.png) <br><br>
 
 ---
 
