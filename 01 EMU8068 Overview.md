@@ -4,30 +4,26 @@ This README provides an overview of the EMU8086 emulator and details a basic ass
 
 ---
 
-## EMU8086 Interface Overview ♻️
+# EMU8086 Interface Overview ♻️
 
-### Emulation Windows 💻
+## Emulation Windows 💻
 
 When you click the “**EMULATE**” button in EMU8086, three windows appear:
 
-1. **Main Editor**: The primary interface where you write and edit assembly code.
+1. **Main Editor**: The primary interface where you write and edit assembly code. <br>
    ![Main Editor](./Assests/image.png) <br><br>
-2. **Source Code Window**: Displays the assembly code in a separate window for easy reference.
+2. **Source Code Window**: Displays the assembly code in a separate window for easy reference.<br>
    ![Source Code Window](<./Assests/2Source Code Window.png>) <br><br>
-3. **Binary File Window**: Shows the binary equivalent of the assembly instructions.
+3. **Binary File Window**: Shows the binary equivalent of the assembly instructions.<br>
    ![Source Code Window](<./Assests/3Binary File Window.png>) <br><br>
 
----
-
-### Data Registers 0️⃣1️⃣
+## Data Registers 0️⃣1️⃣
 
 The **Data Registers** include AX, BX, CX, and DX, which are used for general-purpose data manipulation in 8086 assembly programs.
 
 ![Data Registers](<./Assests/4Data Registers.png>) <br><br>
 
----
-
-### Code Segment and Instruction Pointer (CS:IP) 🧑‍💻
+## Code Segment and Instruction Pointer (CS:IP) 🧑‍💻
 
 - **Code Segment (CS)** and **Instruction Pointer (IP)** registers are critical for generating physical memory addresses.
 - These two registers generate physical addresses of memory.
@@ -88,9 +84,7 @@ The **Data Registers** include AX, BX, CX, and DX, which are used for general-pu
 
     ![CSIP](./Assests/7CSIP.png) <br><br>
 
----
-
-### **Stack Segment Register (SS)** 💪
+## **Stack Segment Register (SS)** 💪
 
 - Each segment has a Segment Base Address (SBA) and an Offset part.
 - There are 4 different kinds of segments in memory. The segment registers are:
@@ -118,9 +112,118 @@ The **Data Registers** include AX, BX, CX, and DX, which are used for general-pu
 
   ![overview](./Assests/image-3.png) <br><br>
 
----
+## Sample Code Block Skeleton
 
-### Sample Code For Understanding: 🔥
+```assembly
+.MODEL SMALL           ; Define the memory model as SMALL, allowing for up to 64 KB of code and 64 KB of data.
+.STACK 100H            ; Reserve 256 bytes (100H) for the stack, used for temporary storage during program execution.
+
+.DATA                  ; Begin the data segment where variables, constants, and other data are defined.
+
+    ; Example data declarations
+    VAR1 DB 10H        ; Declare an 8-bit (1 byte) variable named VAR1 and initialize it with the value 10H (16 in decimal).
+    VAR2 DW 1234H      ; Declare a 16-bit (2 bytes) variable named VAR2 and initialize it with the value 1234H (4660 in decimal).
+    MESSAGE DB 'Hello, World!', '$'  ; Declare a string terminated by '$', required by DOS for output.
+
+.CODE                  ; Begin the code segment where the instructions (logic) of the program are defined.
+
+MAIN PROC              ; Start the main procedure. This is where the program's execution begins.
+
+    MOV AX, @DATA      ; Load the address of the data segment into the AX register.
+    MOV DS, AX         ; Initialize the DS register with the value in AX, pointing DS to the data segment.
+
+    ; Example operation: Load VAR1 into AL, add VAR2's lower byte, and store the result back in VAR1.
+    MOV AL, VAR1       ; Move the value of VAR1 into the AL register (8-bit).
+    ADD AL, [VAR2]     ; Add the lower byte of VAR2 to AL.
+    MOV VAR1, AL       ; Store the result back into VAR1.
+
+    ; Example operation: Display a message on the screen.
+    LEA DX, MESSAGE    ; Load the effective address of MESSAGE into the DX register.
+    MOV AH, 09H        ; DOS interrupt function to display a string.
+    INT 21H            ; Call DOS interrupt 21H to display the string in DX.
+
+    ; Terminate the program.
+    MOV AH, 4CH        ; DOS interrupt function to terminate the program.
+    INT 21H            ; Call DOS interrupt 21H to exit the program.
+
+MAIN ENDP              ; End the main procedure.
+
+END MAIN               ; Mark the end of the program and specify the starting point of execution.
+```
+
+## Detailed Description of Each Part:
+
+1. `.MODEL SMALL`
+
+   - **Purpose**: This directive specifies the memory model used by the program.
+   - **Explanation**: The `SMALL` memory model is one of the several memory models available in 8086 assembly language. It indicates that both the code (instructions) and data (variables) will fit within a single segment, each up to 64 KB. This is suitable for small programs where the total size of the code and data is less than 64 KB.
+
+2. `.STACK 100H`
+
+   - **Purpose**: This directive reserves space for the stack.
+   - **Explanation**: The stack is a special area of memory used for storing temporary data, such as return addresses, local variables, and passed arguments. The `100H` specifies the size of the stack as 256 bytes (`100H` in hexadecimal). The stack is often used in subroutine calls and interrupt handling.
+
+3. `.DATA`
+
+   - **Purpose**: This section is used to define variables and constants and Marks the beginning of the data segment.
+   - **Explanation**: The `.DATA` directive marks the beginning of the data segment where variables, constants, and other data are defined that the program will use. Anything defined in this section will be stored in the data segment (DS). Typically, you'd define things like strings, numbers, or arrays here. In this example:
+     - `VAR1` is an 8-bit variable initialized to `10H`.
+     - `VAR2` is a 16-bit variable initialized to `1234H`.
+     - `MESSAGE` is a string that ends with a `$`, used by DOS to identify the end of the string.
+
+4. `.CODE`
+
+   - **Purpose**: This section is used to define the actual instructions (code) of the program. Marks the beginning of the code segment.
+   - **Explanation**: The `.CODE` directive marks the beginning of the code segment where the program instructions are written. This is where the actual logic of the program resides. This section contains the instructions that the CPU will execute. It typically includes the program’s logic and operations.
+
+5. `MAIN PROC` and `MAIN ENDP`
+
+   - **Purpose**: `PROC` define the main procedure(subroutine) of the program and `MAIN ENDP` marks the end of the MAIN procedure.
+   - **Explanation**:
+     - `PROC` is a directive that defines the start of a procedure (or function). `MAIN` is the name of the procedure, often used as the entry point of the program. This is where the CPU will start executing the program's instructions.
+     - `ENDP` is the directive that signals the end of the procedure named `MAIN`. It pairs with the corresponding `PROC` directive.
+
+6. `MOV AX, @DATA` and `MOV DS, AX`
+
+   - **Purpose**: Set up the data segment register.
+   - **Explanation**: The address of the data segment is loaded into the `AX` register and then moved into the DS register. This is necessary to access variables defined in the `.DATA` section.
+
+7. **Example Operations**:
+
+   - **Load and Add**:
+
+     - `MOV AL, VAR1` loads the value of `VAR1` into the AL register (an 8-bit general-purpose register).
+     - `ADD AL, [VAR2]` adds the lower byte of `VAR2` to the value in `AL`.
+     - `MOV VAR1, AL` stores the result back into `VAR1`.
+
+   - **Display a Message**:
+     - `LEA DX, MESSAGE` loads the address of `MESSAGE` into the DX register.
+     - `MOV AH, 09H` prepares for the `DOS` interrupt to print a string.
+     - `INT 21H` calls the interrupt to display the string.
+
+8. **Program Termination**:
+
+   - **Purpose**: Gracefully end the program and return control to the operating system.
+   - **Explanation**: `MOV AH, 4CH` sets the function to terminate the program, and INT 21H executes it.
+
+9. `END MAIN`
+
+   - **Purpose**: This directive tells the assembler where the program ends and which procedure is the starting point of execution and Marks the end of the program.
+   - **Explanation**: The `END` directive tells the assembler that this is the end of the program. The operand `MAIN` indicates that the execution should start from the `MAIN` procedure.
+
+## Summary:
+
+- The `.MODEL SMALL` directive defines a small memory model.
+- The `.STACK 100H` directive reserves 256 bytes of space for the stack.
+- The `.DATA` section is where variables and constants are declared.
+- The `.CODE` section contains the program's executable instructions.
+- `MAIN PROC` begins the main procedure where the program's logic starts.
+- `MAIN ENDP` marks the end of the MAIN procedure.
+- `END MAIN` tells the assembler to start execution at the MAIN procedure and marks the end of the program.
+
+<br><br>
+
+## Sample Code For Understanding: 🔥
 
 Here’s a simple "Hello, World!" program written in assembly language for TASM:
 
