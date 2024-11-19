@@ -5,6 +5,10 @@
 .CODE                 ; Indicates the start of the code segment
 MAIN PROC             ; Starts the "main" procedure
 
+    ; Initialize data segment
+    MOV AX, @DATA     ; Move the address of the data segment into AX
+    MOV DS, AX        ; Move the value in AX into the DS register
+
     ; Display the character 'A'
     MOV DL, 'A'       ; Move the ASCII value of 'A' into the DL register
     MOV AH, 2         ; Move the value 2 into the AH register (indicates the "print character" function)

@@ -2,9 +2,9 @@
 .STACK 100H
 
 .DATA
-MSG1 DB 'Enter the first single digit: $'  ; Prompt for first digit
-MSG2 DB 0DH, 0AH, 'Enter the second single digit: $'  ; Prompt for second digit
-NEWLINE DB 0DH, 0AH, '$'                   ; Newline for formatting output
+    MSG1 DB 'Enter the first single digit: $'               ; Prompt for first digit
+    MSG2 DB 0DH, 0AH, 'Enter the second single digit: $'    ; Prompt for second digit
+    NEWLINE DB 0DH, 0AH, '$'                                ; Newline for formatting output
 
 .CODE
 MAIN PROC FAR
@@ -23,28 +23,28 @@ MAIN PROC FAR
     SUB AL, 30H            ; Convert ASCII to integer
     MOV BL, AL             ; Store the first digit in BL
 
-    ; Step 5: Display the prompt for second digit
+    ; Step 4: Display the prompt for second digit
     LEA DX, MSG2           ; Load address of the second prompt message
     MOV AH, 09H            ; DOS function to display a string
     INT 21H                ; Display the second prompt message
 
-    ; Step 6: Get the second single digit input
+    ; Step 5: Get the second single digit input
     MOV AH, 01H            ; DOS function to take single character input
     INT 21H                ; Read user input (digit is stored in AL)
     SUB AL, 30H            ; Convert ASCII to integer
 
-    ; Step 7: Subtract the second digit from the first
+    ; Step 6: Subtract the second digit from the first
     SUB BL, AL             ; Subtract the second digit from the first
 
-    ; Step 9: Convert the result back to ASCII
+    ; Step 7: Convert the result back to ASCII
     ADD BL, 30H            ; Convert result to ASCII
 
-    ; Step 10: Display the result
+    ; Step 8: Display the result
     MOV DL, BL             ; Move the result to DL for display
     MOV AH, 02H            ; DOS function to display a single character
     INT 21H                ; Display the result
 
-    ; Step 11: Exit the program
+    ; Step 9: Exit the program
     MOV AH, 4CH            ; DOS function to terminate program
     INT 21H                ; Terminate program
 

@@ -2,8 +2,8 @@
 .STACK 100H
 
 .DATA
-    ; Define the two-digit number
-    NUMBER DB 25H  ; 25H is the hexadecimal value, which is 37 in decimal
+    ; Define the two-digit number in ASCII
+    NUMBER DB '37'  ; '37' is the ASCII representation of the number 37
 
 .CODE
 MAIN PROC FAR
@@ -11,34 +11,23 @@ MAIN PROC FAR
     MOV AX, @DATA
     MOV DS, AX
 
-    ; Step 2: Load the two-digit number into AX
-    MOV AL, NUMBER   ; Load the two-digit number (25H) into AL
-    MOV AH, 00H      ; Clear AH for the division operation
+    ; Step 2: Load the first digit into AL
+    MOV AL, NUMBER   ; Load the first digit ('3') into AL
 
-    ; Step 3: Prepare for division by 10 to extract the digits
-    MOV BL, 0AH      ; Load BL with 10 (0AH) for division
-
-    ; Step 4: Divide AX by BL to get the tens digit in AL and ones digit in AH
-    DIV BL           ; AL = quotient (tens), AH = remainder (ones)
-
-    ; Step 5: Convert the tens digit to ASCII
-    ADD AL, 30H      ; Convert tens digit to ASCII ('0' = 30H)
-
-    ; Step 6: Display the tens digit
-    MOV DL, AL       ; Move tens ASCII value to DL for display
+    ; Step 3: Display the first digit
+    MOV DL, AL       ; Move first digit to DL for display
     MOV AH, 02H      ; DOS function to print a single character
-    INT 21H          ; Call DOS interrupt to print the tens digit
+    INT 21H          ; Call DOS interrupt to print the first digit
 
-    ; Step 8: Convert the ones digit to ASCII
-    MOV AL, AH       ; Move the remainder (ones digit) to AL
-    ADD AL, 30H      ; Convert ones digit to ASCII
-
-    ; Step 9: Display the ones digit
-    MOV DL, AL       ; Move ones ASCII value to DL for display
+    ; Step 4: Load the second digit into AL
+    MOV AL, NUMBER+1 ; Load the second digit ('7') into AL
+    
+    ; Step 5: Display the second digit
+    MOV DL, AL       ; Move second digit to DL for display
     MOV AH, 02H      ; DOS function to print a single character
-    INT 21H          ; Call DOS interrupt to print the ones digit
+    INT 21H          ; Call DOS interrupt to print the second digit
 
-    ; Step 11: Exit the program
+    ; Step 6: Exit the program
     MOV AH, 4CH      ; DOS function to terminate program
     INT 21H          ; Exit the program
 

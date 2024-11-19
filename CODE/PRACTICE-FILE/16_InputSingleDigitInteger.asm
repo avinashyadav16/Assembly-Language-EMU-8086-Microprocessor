@@ -2,8 +2,8 @@
 .STACK 100H
 
 .DATA
-MSG DB 'Enter A Single Digit: $'   ; The prompt message to ask for a single digit
-NEWLINE DB 0DH, 0AH, '$'           ; Newline characters (carriage return, line feed)
+    MSG DB 'Enter A Single Digit: $'   ; The prompt message to ask for a single digit
+    NEWLINE DB 0DH, 0AH, '$'           ; Newline characters (carriage return, line feed)
 
 .CODE
 MAIN PROC FAR

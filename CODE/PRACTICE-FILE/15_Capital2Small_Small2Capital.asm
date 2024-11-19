@@ -1,9 +1,8 @@
-.MODEL SMALL            ; Define the memory model
-.STACK 100H             ; Define the stack size
-.DATA                   ; Start of the data segment
-
-message DB 'Hello, World!$' ; Original message with '$' terminator for display
-converted DB 20 DUP('$')    ; Space for the converted message, 20 characters max
+.MODEL SMALL            
+.STACK 100H             
+.DATA                   
+    message DB 'Hello, World!$' ; Original message with '$' terminator for display
+    converted DB 20 DUP('$')    ; Space for the converted message, 20 characters max
 
 .CODE                   ; Start of the code segment
 MAIN PROC               ; Start of the main procedure

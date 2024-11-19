@@ -1,8 +1,7 @@
 .MODEL SMALL          ; Define the memory model
 .STACK 100H           ; Define the stack size
 .DATA                 ; Start of the data segment
-
-message DB 'Hello, World!$' ; Define the message to print, '$' is used as a string terminator
+    message DB 'Hello, World!$' ; Define the message to print, '$' is used as a string terminator
 
 .CODE                 ; Start of the code segment
 MAIN PROC             ; Start of the main procedure
