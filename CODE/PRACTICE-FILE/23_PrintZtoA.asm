@@ -1,7 +1,7 @@
 .MODEL SMALL
 .STACK 100H
 .DATA
-    NEWLINE DB 13, 10, '$'   ; New line to end the output
+    NEWLINE DB 0DH, 0AH, '$'   ; New line to end the output
 
 .CODE
 MAIN PROC
@@ -21,10 +21,10 @@ PRINT_LOOP:
 
     ; Move to a new line after printing
     LEA DX, NEWLINE
-    MOV AH, 09H
+    MOV AH, 09H              ; DOS function to display string
     INT 21H
 
-    MOV AH, 4CH              ; Exit program
+    MOV AH, 4CH              ; DOS function to exit program
     INT 21H
 
 MAIN ENDP

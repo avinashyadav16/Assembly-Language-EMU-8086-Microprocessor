@@ -1,7 +1,7 @@
 .MODEL SMALL
 .STACK 100H
 .DATA
-    NEWLINE DB 13, 10, '$'    ; New line to end the output
+    NEWLINE DB 0DH, 0AH, '$'    ; New line to end the output
 
 .CODE
 MAIN PROC

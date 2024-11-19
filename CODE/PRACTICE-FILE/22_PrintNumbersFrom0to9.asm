@@ -1,7 +1,7 @@
 .MODEL SMALL
 .STACK 100H
 .DATA
-    NEWLINE DB 13, 10, '$'   ; New line to end the output
+    NEWLINE DB 0DH, 0AH, '$'   ; New line to end the output
 
 .CODE
 MAIN PROC
@@ -20,9 +20,9 @@ PRINT_LOOP:
     LOOP PRINT_LOOP          ; Loop until CX reaches 0
 
     ; Move to a new line after printing
-    LEA DX, NEWLINE
-    MOV AH, 09H
-    INT 21H
+    LEA DX, NEWLINE          ; Load address of NEWLINE into DX
+    MOV AH, 09H              ; DOS function to display string
+    INT 21H                  ; Print string in DX
 
     MOV AH, 4CH              ; Exit program
     INT 21H
